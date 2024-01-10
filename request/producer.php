@@ -18,3 +18,5 @@ $connection->close();
 echo '<pre>';
 //print_r($channel);
 echo '</pre>';
+
+echo 123;
