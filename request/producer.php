@@ -10,7 +10,8 @@ $channel->queue_declare('hello', false, false, false, false);
 
 $string = 'Hello World!';
 $msg = new AMQPMessage($string);
-$channel->basic_publish($msg, '', 'hello');
+$channel->basic_publish($msg, '', 'hellogit status
+');
 
 $channel->close();
 $connection->close();
