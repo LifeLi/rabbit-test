@@ -26,7 +26,6 @@ class BotTable extends Data\DataManager
         return [
             new Fields\IntegerField('ID', [
                 "primary" => true,
-                "unique" => true,
                 "autocomplete" => true,
                 "title" => Loc::getMessage('PORTALPOZH_TELEGRAM_LIB_MODELS_BOT_ID'),
             ]),
@@ -43,19 +42,34 @@ class BotTable extends Data\DataManager
             new Fields\StringField('BOT_NAME', [
                 "nullable"=>false,
                 "required"=>true,
-                "size" => 128,
+                'validation' => function()
+                {
+                    return[
+                        new Validators\LengthValidator\LengthValidator(null, 255),
+                    ];
+                },
                 "title"=>Loc::getMessage('PORTALPOZH_TELEGRAM_LIB_MODELS_BOT_BOT_NAME'),
             ]),
             new Fields\StringField('BOT_TOKEN', [
                 "nullable"=>false,
                 "required"=>true,
-                "size" => 200,
+                'validation' => function()
+                {
+                    return[
+                        new Validators\LengthValidator\LengthValidator(null, 255),
+                    ];
+                },
                 "title"=>Loc::getMessage('PORTALPOZH_TELEGRAM_LIB_MODELS_BOT_BOT_TOKEN'),
             ]),
             new Fields\StringField('BOT_DESCRIPTION', [
                 "nullable"=>true,
                 "required"=>true,
-                "size" => 250,
+                'validation' => function()
+                {
+                    return[
+                        new Validators\LengthValidator\LengthValidator(null, 255),
+                    ];
+                },
                 "title"=>Loc::getMessage('PORTALPOZH_TELEGRAM_LIB_MODELS_BOT_BOT_DESCRIPTION'),
             ]),
             new Reference(

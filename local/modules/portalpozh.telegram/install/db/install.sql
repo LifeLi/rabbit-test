@@ -25,3 +25,6 @@ CREATE TABLE `portalpozh_telegram_bot_users` (
   KEY `BOT_ID` (`BOT_ID`),
   CONSTRAINT `portalpozh_telegram_bot_users_ibfk_1` FOREIGN KEY (`BOT_ID`) REFERENCES `b_im_bot` (`BOT_ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+INSERT INTO `portalpozh_telegram_bot_types` (`NAME`, `DATE_CREATE`, `DATE_UPDATE`) VALUES
+('Коннектор для связи',	'2024-01-01 23:59:59',	'0000-00-00 00:00:00');

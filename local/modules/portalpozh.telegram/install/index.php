@@ -1,5 +1,7 @@
 <?php
 use Bitrix\Main\Localization\Loc;
+use Bitrix\Main\Application;
+use Bitrix\Main\Diag\Debug;
 
 Loc::loadMessages(__FILE__);
 
@@ -7,12 +9,13 @@ if(class_exists("portalpozh_telegram")) return;
 
 class portalpozh_telegram extends CModule
 {
-    public const MODULE_ID = 'gpbl.ipr';
-    public $MODULE_ID = 'gpbl.ipr';
+    public const MODULE_ID = 'portalpozh.telegram';
+    public $MODULE_ID = 'portalpozh.telegram';
     public $MODULE_VERSION;
     public $MODULE_VERSION_DATE;
     public $MODULE_NAME;
     public $MODULE_DESCRIPTION;
+    public $errors;
 
     public function __construct()
     {
@@ -28,14 +31,37 @@ class portalpozh_telegram extends CModule
 
     public function InstallDB($arParams = [])
     {
+        global $DB;
 
-        return true;
+        if(!$DB->Query("SELECT `ID` FROM `portalpozh_telegram_bot_settings`", true))
+        {
+            $this->errors = $DB->RunSQLBatch($_SERVER['DOCUMENT_ROOT'] . "/local/modules/".$this->MODULE_ID."/install/db/install.sql");
+        }
+
+        if (!$this->errors)
+        {
+            return true;
+        }
+        else
+        {
+            return $this->errors;
+        }
     }
 
     public function UnInstallDB($arParams = [])
     {
+        global $DB;
 
-        return true;
+        $this->errors = $DB->RunSQLBatch($_SERVER['DOCUMENT_ROOT'] . "/local/modules/".$this->MODULE_ID."/install/db/uninstall.sql");
+
+        if (!$this->errors)
+        {
+            return true;
+        }
+        else
+        {
+            return $this->errors;
+        }
     }
 
     public function InstallEvents()
